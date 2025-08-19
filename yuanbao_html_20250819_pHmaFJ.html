@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多功能工具 - 文本复制+美团跳转</title>
+    <style>
+        /* 原有样式保持不变 */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif; }
+        body { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: #333; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: rgba(255, 255, 255, 0.92); border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); padding: 30px; backdrop-filter: blur(10px); }
+        header { text-align: center; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #e0e0e0; }
+        h1 { font-size: 2.5rem; color: #2c3e50; margin-bottom: 10px; background: linear-gradient(90deg, #6a11cb, #2575fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .description { color: #7f8c8d; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+        .text-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; margin-top: 20px; }
+        .text-item { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); border: 1px solid #e0e0e0; transition: all 0.3s ease; display: flex; flex-direction: column; }
+        .text-item:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); border-color: #a3b1ff; }
+        .text-content { background: #f8f9ff; border: 1px dashed #d0d8ff; border-radius: 10px; padding: 15px; margin-bottom: 18px; font-size: 1.05rem; color: #2c3e50; flex-grow: 1; }
+        .copy-btn { background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); color: white; border: none; border-radius: 50px; padding: 12px 25px; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+        .copy-btn:hover { background: linear-gradient(135deg, #5a0db5 0%, #1c67e0 100%); transform: scale(1.03); }
+        .copy-btn:active { transform: scale(0.98); }
+        .copy-btn i { margin-right: 8px; font-size: 1.2rem; }
+        .notifications { position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
+        .notification { background: rgba(255, 255, 255, 0.95); border-radius: 10px; padding: 15px 25px; margin-top: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15); border-left: 5px solid #4CAF50; display: flex; align-items: center; animation: fadeIn 0.5s, fadeOut 0.5s 2.5s forwards; }
+        .notification.error { border-left-color: #f44336; }
+        .notification i { margin-right: 10px; font-size: 1.4rem; }
+        footer { margin-top: 40px; text-align: center; color: #7f8c8d; font-size: 0.9rem; }
+
+        /* 新增美团区块样式 */
+        .section-divider {
+            margin: 40px 0 30px;
+            text-align: center;
+            font-size: 1.8rem;
+            color: #2c3e50;
+            position: relative;
+        }
+        .section-divider:before,
+        .section-divider:after {
+            content: "";
+            flex: 1;
+            border-bottom: 2px solid #ffdd00;
+            margin: auto;
+        }
+        .section-divider span {
+            padding: 0 20px;
+            background: linear-gradient(135deg, #ffdd00 0%, #ffbf00 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .meituan-btn { 
+            background: linear-gradient(135deg, #ffdd00 0%, #ffbf00 100%);
+            color: #000 !important;
+            border: 1px solid #ffa000;
+        }
+        .meituan-btn:hover { background: linear-gradient(135deg, #ffd000 0%, #ffaa00 100%); }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>多功能复制工具</h1>
+            <p class="description">文本复制 + 美团领券直达功能整合版</p>
+        </header>
+        
+        <!-- 文本复制区块 -->
+        <div class="text-container">
+            <!-- 文本块 1-15 (保持原有结构) -->
+            <div class="text-item">
+                <div class="text-content">
+                    欢迎使用文本复制工具！这是一个示范文本。
+                </div>
+                <button class="copy-btn" onclick="copyText(this, '欢迎使用文本复制工具！这是一个示范文本。')">
+                    <i class="fas fa-copy"></i> 复制文本
+                </button>
+            </div>
+            
+            <!-- 更多文本块... -->
+            
+        </div>
+
+        <!-- 美团跳转区块 -->
+        <div class="section-divider">
+            <span>美团领券直达区</span>
+        </div>
+        
+        <div class="text-container">
+            <!-- 美团跳转项 1 -->
+            <div class="text-item">
+                <div class="text-content">
+                    美团外卖大额券（限时）
+                </div>
+                <button class="copy-btn meituan-btn" onclick="openMeituan('http://dpurl.cn/A3fjRt3z')">
+                    <i class="fas fa-external-link-alt"></i> 美团App领券
+                </button>
+            </div>
+            
+            <!-- 美团跳转项 2 -->
+            <div class="text-item">
+                <div class="text-content">
+                    到店美食5折起
+                </div>
+                <button class="copy-btn meituan-btn" onclick="openMeituan('http://dpurl.cn/B4gkRt4a')">
+                    <i class="fas fa-external-link-alt"></i> 美团App领券
+                </button>
+            </div>
+            
+            <!-- 美团跳转项 3-5... -->
+            
+        </div>
+        
+        <footer>
+            <p>多功能工具 | 文本复制 + 美团领券直达</p>
+            <p>提示：美团按钮需要手机安装美团App</p>
+        </footer>
+    </div>
+    
+    <div class="notifications"></div>
+    
+    <script>
+        // 复制文本函数
+        function copyText(button, text) {
+            button.classList.add('copying');
+            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 复制中...';
+            
+            navigator.clipboard.writeText(text)
+                .then(() => {
+                    setTimeout(() => {
+                        button.innerHTML = '<i class="fas fa-check"></i> 已复制!';
+                        showNotification('内容已成功复制到剪贴板!', 'success');
+                        setTimeout(() => {
+                            button.innerHTML = '<i class="fas fa-copy"></i> 复制文本';
+                            button.classList.remove('copying');
+                        }, 2000);
+                    }, 300);
+                })
+                .catch(err => {
+                    // 降级方案：使用传统复制方法 [1,3](@ref)
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    textArea.style.position = 'fixed';
+                    textArea.style.top = '0';
+                    textArea.style.left = '0';
+                    textArea.style.width = '2em';
+                    textArea.style.height = '2em';
+                    textArea.style.padding = '0';
+                    textArea.style.border = 'none';
+                    textArea.style.outline = 'none';
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    
+                    try {
+                        document.execCommand('copy');
+                        showNotification('内容已复制!', 'success');
+                    } catch (err) {
+                        showNotification('复制失败: ' + err, 'error');
+                    }
+                    
+                    document.body.removeChild(textArea);
+                    button.innerHTML = '<i class="fas fa-copy"></i> 复制文本';
+                    button.classList.remove('copying');
+                });
+        }
+        
+        // 美团跳转函数
+        function openMeituan(url) {
+            const appScheme = 'meituan://';
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = appScheme;
+            document.body.appendChild(iframe);
+            
+            setTimeout(() => {
+                document.body.removeChild(iframe);
+                if (!document.hidden) {
+                    window.open(url, '_blank');
+                    showNotification('已打开美团网页版，请登录领取', 'success');
+                }
+            }, 500);
+        }
+        
+        // 显示通知
+        function showNotification(message, type = 'success') {
+            const notifications = document.querySelector('.notifications');
+            const notification = document.createElement('div');
+            notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+            notification.innerHTML = `
+                <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                <span>${message}</span>
+            `;
+            notifications.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
